@@ -9,9 +9,9 @@ import java.util.*;
 
 public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
 
-    /* Heap for storing elements and occurences t place the occurrences */
+    /* Heap for storing elements and occurrences t place the occurrences */
     private T[] heap;
-    private int[] occurences;
+    private int[] occurrences;
     private int max_heap_size;
     private int heap_size;
 
@@ -19,36 +19,36 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
 
     /*
      * Constructor for Heap distinct class taking max size and initializing heap and
-     * occurences Constructor for Heap distinct class taking max size and
-     * initializing heap and occurences
+     * occurrences Constructor for Heap distinct class taking max size and
+     * initializing heap and occurrences
      */
     public HeapDistinct(int maximum_size) {
 
         this.heap_size = 0;
         this.max_heap_size = maximum_size;
         heap = (T[]) new Comparable[this.max_heap_size + 1];
-        occurences = new int[this.max_heap_size + 1];
+        occurrences = new int[this.max_heap_size + 1];
 
         for (int i = 0; i < this.max_heap_size + 1; i++) {
-            occurences[i] = 0;
+            occurrences[i] = 0;
         }
     }
 
     /*
-     * Swap 2 elements in the heap with swapping there occurences also
+     * Swap 2 elements in the heap with swapping there occurrences also
      */
     public void swap_elements(int idx1, int idx2) {
         T elem;
         int freq;
 
         elem = heap[idx1];
-        freq = occurences[idx1];
+        freq = occurrences[idx1];
 
         heap[idx1] = heap[idx2];
-        occurences[idx1] = occurences[idx2];
+        occurrences[idx1] = occurrences[idx2];
 
         heap[idx2] = elem;
-        occurences[idx2] = freq;
+        occurrences[idx2] = freq;
     }
 
     /*
@@ -77,14 +77,14 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
     }
 
     /*
-     * Get ith Element's occurences in the Heap Array
+     * Get ith Element's occurrences in the Heap Array
      */
     public int get_ith_elements_occurence(int idx) {
 
         if (idx < 1 || idx > heap_size) {
             throw new NoSuchElementException("Index Out of Bounds");
         }
-        return occurences[idx];
+        return occurrences[idx];
     }
 
     /*
@@ -93,7 +93,7 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
     public void resize_heap(int new_max_size) {
         this.max_heap_size = new_max_size;
         heap = Arrays.copyOf(heap, this.max_heap_size + 1);
-        occurences = Arrays.copyOf(occurences, this.max_heap_size + 1);
+        occurrences = Arrays.copyOf(occurrences, this.max_heap_size + 1);
     }
 
     /* Heapify the heap to bottom carries the smaller element to bottom */
@@ -128,13 +128,13 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
 
     /*
      * Insert an element to the heap and if already found then increase its
-     * occurences else add it to last and heapify to its correct place in the heap
+     * occurrences else add it to last and heapify to its correct place in the heap
      */
     public boolean insert_to_heap(T element) {
 
         for (int i = 1; i <= heap_size; i++) {
             if (heap[i].compareTo(element) == 0) {
-                occurences[i]++;
+                occurrences[i]++;
                 return true;
             }
         }
@@ -147,13 +147,13 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
         if (heap_size == 0) {
             heap_size++;
             heap[heap_size] = element;
-            occurences[heap_size] = 1;
+            occurrences[heap_size] = 1;
             return true;
         }
 
         heap_size++;
         heap[heap_size] = element;
-        occurences[heap_size] = 1;
+        occurrences[heap_size] = 1;
         // adjust the heap;
 
         int newly_inserted_idx = heap_size;
@@ -176,24 +176,24 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
     }
 
     /*
-     * This removes the maximum element with all its occurrencesfrom the array it is
+     * This removes the maximum element with all its occurrences from the array it is
      * used in remove ith element in heap function to carry out elements and
-     * reinsert to heap with 1 occurence lower of kth max element. Deletion is
-     * independent of occurences here.
+     * reinsert to heap with 1 occurrence lower of kth max element. Deletion is
+     * independent of occurrences here.
      */
     public T remove_max_element_without_occurence(int[] occ, int i) {
 
         if (heap_size == 1) {
             heap_size = 0;
-            occ[i] = occurences[1];
+            occ[i] = occurrences[1];
             return heap[1];
         }
 
         T max_elem = heap[1];
-        occ[i] = occurences[1];
+        occ[i] = occurrences[1];
 
         heap[1] = heap[heap_size];
-        occurences[1] = occurences[heap_size];
+        occurrences[1] = occurrences[heap_size];
         heap_size -= 1;
 
         /* Generate New Max */
@@ -265,7 +265,7 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
     public void print() {
         System.out.println("Element:Frequency");
         for (int i = 1; i <= heap_size; i++) {
-            System.out.print(heap[i] + ":" + occurences[i] + " ");
+            System.out.print(heap[i] + ":" + occurrences[i] + " ");
         }
         System.out.println();
     }
@@ -278,7 +278,7 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
         this.max_heap_size = secondHeap.max_heap_size;
         this.heap_size = secondHeap.heap_size;
         heap = Arrays.copyOf(secondHeap.heap, this.max_heap_size + 1);
-        occurences = Arrays.copyOf(secondHeap.occurences, this.max_heap_size + 1);
+        occurrences = Arrays.copyOf(secondHeap.occurrences, this.max_heap_size + 1);
         return;
     }
 
@@ -309,7 +309,7 @@ public class HeapDistinct<T extends Comparable<T>> implements Iterable<T> {
             }
             T result = heap[heap_size];
             heap[heap_size] = item;
-            occurences[heap_size] = 1;
+            occurrences[heap_size] = 1;
             int newly_inserted_idx = heap_size;
             while ((newly_inserted_idx > 1) && heap[newly_inserted_idx].compareTo(heap[(newly_inserted_idx / 2)]) > 0) {
                 swap_elements(newly_inserted_idx, (newly_inserted_idx / 2));
