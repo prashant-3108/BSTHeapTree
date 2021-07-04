@@ -14,16 +14,20 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
 
         private HeapDistinct<T> data;
 
-        public bst_node() {
+
+        public bst_node(int heapSize) {
             left = right = null;
-            data = new HeapDistinct<>(7);
+            data = new HeapDistinct<>(heapSize);
+
         }
     }
 
     bst_node<T> root;
+    int heapSize = 0;
 
-    public BSTHeapTree() {
-        super(7);
+    public BSTHeapTree(int heapSize) {
+        super(heapSize);
+        this.heapSize = heapSize;
         root = null;
     }
 
@@ -33,7 +37,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
     public int add(T element) {
 
         if (root == null) {
-            root = new bst_node<>();
+            root = new bst_node<>(heapSize);
         }
 
         bst_node<T> temp = root;
@@ -52,7 +56,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
             int Hsize = temp.data.get_curr_size();
             int Msize = temp.data.get_max_size();
 
-            if (Hsize >= 0 && Hsize < 7) {
+            if (Hsize >= 0 && Hsize < heapSize) {
                 temp.data.insert_to_heap(element);
                 return 1;
             }
@@ -64,7 +68,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
                     if (temp.left != null) {
                         temp = temp.left;
                     } else {
-                        temp.left = new bst_node<>();
+                        temp.left = new bst_node<>(heapSize);
                         temp.left.data.insert_to_heap(element);
                         return 1;
                     }
@@ -72,7 +76,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
                     if (temp.right != null) {
                         temp = temp.right;
                     } else {
-                        temp.right = new bst_node<>();
+                        temp.right = new bst_node<>(heapSize);
                         temp.right.data.insert_to_heap(element);
                         return 1;
                     }
@@ -184,7 +188,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
 
     private bst_node<T> helper_insert(bst_node<T> root, HeapDistinct<T> node) {
         if (root == null) {
-            root = new bst_node<>();
+            root = new bst_node<>(heapSize);
             root.data.replace_heap(node);
             return root;
         }
@@ -344,7 +348,7 @@ public class BSTHeapTree<T extends Comparable<T>> extends HeapDistinct<T> {
 
         int[] occ_after_removal = new int[2];
         bst_node<T>[] removed_node = new bst_node[2];
-        HeapDistinct<T> h = new HeapDistinct<>(7);
+        HeapDistinct<T> h = new HeapDistinct<>(heapSize);
         removed_node[0] = removed_node[1] = null;
 
         root = custom_remove(root, element, occ_after_removal, removed_node, h);

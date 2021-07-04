@@ -101,7 +101,7 @@ public class Main {
         // /* Heap Functionaality Part I */
         // /* Using class - Heap */
 
-        BSTHeapTree<Integer> tree = new BSTHeapTree<>();
+        BSTHeapTree<Integer> tree = new BSTHeapTree<>(7);
 
         int[] random_array = new int[3000];
         int itr3 = 0;
